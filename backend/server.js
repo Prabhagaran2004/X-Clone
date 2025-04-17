@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const app = express()
 const authRoute = require('./routes/auth')
+const connectDb = require('./db/connectDb')
 
 dotenv.config()
 const PORT = process.env.PORT;
@@ -13,6 +14,8 @@ app.get('/' , (req , res) => {
 })
 
 
+
 app.listen(PORT , () => {
     console.log(`Server is running ${PORT}`);
+    connectDb()
 })
