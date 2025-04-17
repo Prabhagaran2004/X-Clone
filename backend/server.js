@@ -7,7 +7,7 @@ const connectDb = require('./db/connectDb')
 dotenv.config()
 const PORT = process.env.PORT;
 
-
+app.use(express.json())
 app.use('/api/auth' , authRoute)
 app.get('/' , (req , res) => {
     res.send("Home")
