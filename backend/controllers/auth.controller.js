@@ -8,7 +8,7 @@ const signup = async(req ,res) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         if(!emailRegex.test(email)){
             return res.status(400).json({message : "Invalid email"})
-        }
+        } 
 
         const existingemail = await User.findOne({email : email})
         const existingusername = await User.findOne({username : username})
@@ -94,4 +94,14 @@ const logout = async(req ,res) => {
     }
 }
 
-module.exports = {signup , login , logout}
+const getMe = async(req, res) => {
+    try {
+        const user = await User.findOne({ _id : req.user._id}).select("-password")
+        res.status(200).json(user)
+    } catch (error) {
+        console.log(`Error in GetMe controller`)
+        res.status(500).json({error : "Internal Server Error"})
+    }
+}
+
+module.exports = {signup , login , logout , getMe}

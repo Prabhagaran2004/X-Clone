@@ -13,6 +13,6 @@ const generateToken = ( userId , res ) => {
         secure : process.env.NODE_ENV !== "development"
     })
 }
-
+ 
 
 module.exports = generateToken
