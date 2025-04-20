@@ -1,12 +1,12 @@
 const User = require('../models/user.model')
 const bcrypt = require('bcryptjs');
-const { link } = require('../routes/auth');
+const generateToken = require('../utils/generateToken')
 
 const signup = async(req ,res) => {
     try {
-        const { username , fullname , email , password} = req.body;
+        const { username , fullname , email , password } = req.body;
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-        if(!emailRegex.text(email)){
+        if(!emailRegex.test(email)){
             return res.status(400).json({message : "Invalid email"})
         }
 
@@ -29,16 +29,17 @@ const signup = async(req ,res) => {
         })
 
         if(newUser){
+            generateToken(newUser._id , res)
             await newUser.save()
             res.status(200).json({
                 _id : newUser._id ,
                 username : newUser.username ,
                 fullname : newUser.fullname ,
                 email : newUser.email ,
-                followers : newUSer.followers,
+                followers : newUser.followers,
                 following : newUser.following,
                 profileImg : newUser.profileImg,
-                coverImg : newPUser.coverImg,
+                coverImg : newUser.coverImg,
                 bio : newUser.bio,
                 link : newUser.link
             })
@@ -53,11 +54,44 @@ const signup = async(req ,res) => {
         res.status(500).json({error : "Internal Server Error"})
     }
 }
-const login = (req ,res) => {
-    res.send("login")
+const login = async(req ,res) => {
+    try {
+        const { username , password } = req.body
+        const user = await User.findOne({username})
+        const isPasswordCorrect = await bcrypt.compare(password , user.password || "")
+
+        if( !user || !isPasswordCorrect ){
+            return res.status(400).json({error : "Incorrect Email or Password..."})
+        }
+    
+        generateToken(user._id , res)
+        
+        res.status(200).json({
+            _id : user._id ,
+            username : user.username ,
+            fullname : user.fullname ,
+            email : user.email ,
+            followers : user.followers,
+            following : user.following,
+            profileImg : user.profileImg,
+            coverImg : user.coverImg,
+            bio : user.bio,
+            link : user.link
+        })
+
+    } catch (error) {
+        console.log(`Error in connecting DB : ${error}`)
+        res.status(500).json({error : "Internal Server Error"})
+    }
 }
-const logout = (req ,res) => { 
-    res.send("logout")
+const logout = async(req ,res) => { 
+    try {
+        res.cookie("jwt" , "" , { maxAge : 0 })
+        res.status(200).json({ message : "Logout successfully"})
+    } catch (error) {
+        console.log(`Error in connecting DB : ${error}`)
+        res.status(500).json({error : "Internal Server Error"})
+    }
 }
 
 module.exports = {signup , login , logout}
