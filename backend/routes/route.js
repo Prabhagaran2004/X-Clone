@@ -7,7 +7,7 @@ const {
 const router = express.Router()
 
 router.get("/profile/:username" , protectRoute , getProfile)
-router.get("/follow/:id" , protectRoute , getFollowUnfollow)
+router.post("/follow/:id" , protectRoute , getFollowUnfollow)
 
 
 module.exports = router 
