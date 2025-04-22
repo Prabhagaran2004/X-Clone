@@ -68,7 +68,7 @@ const getSuggested = async(req , res) => {
                     _id: { $ne: userId },
                 },
             },
-            { $sample: { size: 10 } },
+            { $sample: { size: 10 } }, 
         ]);
         const filteredUsers = users.filter((user) => !usersFollowedByMe.following.includes(user._id));
         const suggestedUsers = filteredUsers.slice(0, 4);
