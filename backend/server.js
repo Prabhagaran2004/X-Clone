@@ -5,6 +5,7 @@ const authRoute = require('./routes/auth')
 const connectDb = require('./db/connectDb')
 const cookieParser = require("cookie-parser")
 const userRoute = require('./routes/route')
+const postRoute = require('./models/post.model')
 const cloudinary = require('cloudinary')
 
 dotenv.config()
@@ -21,6 +22,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/api/auth' , authRoute)
 app.use('/api/users' , userRoute)
+app.use('/api/posts' , postRoute)
 
  
 
