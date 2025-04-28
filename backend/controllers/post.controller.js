@@ -1,6 +1,7 @@
 const User = require("../models/user.model")
 const cloudinary = require('cloudinary').v2
-const Post = require('../models/post.model')
+const Post = require('../models/post.model');
+const Notification = require("../models/notification.model");
 
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -102,7 +103,28 @@ const commentPost = async (req, res) => {
 
 const likeUnlike = async (req, res) => {
     try {
-        
+        const userId = req.user._id
+		const { id : postId }  = req.params
+		const post = await Post.findOne({ _id : postId})
+		if(!post){
+			return res.status(404).json({ error : "Post not found"})
+		}
+		const likedPost = post.likes.includes(userId)
+		if(likedPost){
+			await Post.updateOne( { id : postId} , { $pull : {likes : userId} } )
+			res.status(200).json({ message : "Post unliked successfully"})
+		}else{
+			post.likes.push(userId)
+			await post.save()
+
+			const notification = new Notification({
+				from : userId,
+				to : post.user,
+				type : "like"
+			})
+			await notification.save()
+			res.status(200).json({ message : "Post liked successfully"})
+		}
     } catch (error) {
         res.status(500).json({ error: "Internal server error" });
         console.log("Error in Like and Unlike controller: ", error);
