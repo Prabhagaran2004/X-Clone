@@ -5,12 +5,12 @@ const authRoute = require('./routes/auth')
 const connectDb = require('./db/connectDb')
 const cookieParser = require("cookie-parser")
 const userRoute = require('./routes/route')
-const postRoute = require('./models/post.model')
+const postRoute = require('./routes/post')
 const cloudinary = require('cloudinary')
 
 dotenv.config()
 cloudinary.config({
-    cloud_name : process.env.CLOUD_NAME ,
+    cloud_name : process.env.CLOUD_NAME , 
     api_key : process.env.API_KEY,
     api_secret : process.env.API_SECRET_KEY
 })
