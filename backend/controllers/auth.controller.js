@@ -40,7 +40,7 @@ const signup = async(req ,res) => {
                 following : newUser.following,
                 profileImg : newUser.profileImg,
                 coverImg : newUser.coverImg,
-                bio : newUser.bio,
+                bio : newUser.bio,  
                 link : newUser.link
             })
         }

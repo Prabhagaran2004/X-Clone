@@ -5,7 +5,7 @@ const authRoute = require('./routes/auth')
 const connectDb = require('./db/connectDb')
 const cookieParser = require("cookie-parser")
 const userRoute = require('./routes/route')
-const postRoute = require('./routes/post')
+const postRoute = require('./routes/post')  
 const cloudinary = require('cloudinary')
 
 dotenv.config()

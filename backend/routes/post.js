@@ -1,7 +1,7 @@
 const express = require('express')
 const protectRoute = require('../middleware/protectRoute')
 const { createPost , deletePost , commentPost , likeUnlike } = require('../controllers/post.controller')
-const router = express.Router()
+const router = express.Router()   
 
 
 router.post('/create' , protectRoute , createPost)
