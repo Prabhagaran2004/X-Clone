@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
         type : String 
     },
     likes : [
-        {
+        { 
             type: mongoose.Schema.Types.ObjectId, 
             ref: "User"
         }
@@ -31,7 +31,8 @@ const postSchema = new mongoose.Schema({
                 required: true
             }
         }
-    ]
+    ],
+    
 } , { timestamps : true } )
 
 const Post = mongoose.model("Posts" , postSchema)

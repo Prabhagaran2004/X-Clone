@@ -76,7 +76,8 @@ const login = async(req ,res) => {
             profileImg : user.profileImg,
             coverImg : user.coverImg,
             bio : user.bio,
-            link : user.link
+            link : user.link,
+            likedPosts : user.likedPosts
         })
 
     } catch (error) {

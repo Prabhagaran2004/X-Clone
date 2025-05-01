@@ -111,10 +111,12 @@ const likeUnlike = async (req, res) => {
 		}
 		const likedPost = post.likes.includes(userId)
 		if(likedPost){
-			await Post.updateOne( { id : postId} , { $pull : {likes : userId} } )
+			await Post.updateOne( { _id : postId} , { $pull : {likes : userId} } )
+            await User.updateOne({ _id : userId} , {$pull : { likedPosts : postId}})
 			res.status(200).json({ message : "Post unliked successfully"})
 		}else{
 			post.likes.push(userId)
+            await User.updateOne({ _id : userId} , { $push : {likedPost : postId}})
 			await post.save()
 
 			const notification = new Notification({
@@ -131,9 +133,65 @@ const likeUnlike = async (req, res) => {
     }
 };
 
+const getAllPosts = async( req , res ) => {
+    try {
+        const posts = await Post.find().sort({createdAt : -1}).populate({
+            path : 'user',
+            select : "-password"
+        }).populate({
+            path : 'comments.user',
+            select : "-password"
+        })
+        if(posts.length === 0 ){
+            return res.status(200).json([])
+        }
+        res.status(200).json(posts)
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+        console.log("Error in All posts controller: ", error);
+    }
+}
+ 
+const getLikedPosts = async( req, res ) => {
+    const userId = req.params.id;
+
+	try {
+		const user = await User.findById(userId);
+		if (!user) return res.status(404).json({ error: "User not found" });
+
+		const likedPosts = await Post.find({ _id: { $in: user.likedPosts } })
+			.populate({
+				path: "user",
+				select: "-password",
+			})
+			.populate({
+				path: "comments.user",
+				select: "-password",
+			});
+
+		res.status(200).json(likedPosts);
+	} catch (error) {
+		console.log("Error in getLikedPosts controller: ", error);
+		res.status(500).json({ error: "Internal server error" });
+	}
+}
+
+
+const getFollowingPost = async( req ,res ) => {
+    try {
+        
+    } catch (error) {
+        console.log("Error in following post controller: ", error);
+		res.status(500).json({ error: "Internal server error" });
+    }
+}
+
 module.exports = {
     createPost,
     deletePost,
     commentPost,
-    likeUnlike
+    likeUnlike,
+    getAllPosts,
+    getLikedPosts,
+    getFollowingPost
 };
