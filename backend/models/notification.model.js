@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const notificationSchema = mongoose.Schema({
     from : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'User',
+        ref : 'User', 
         required : true 
     },
     to : {

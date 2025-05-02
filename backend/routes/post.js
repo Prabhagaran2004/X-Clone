@@ -7,7 +7,8 @@ const {
     likeUnlike ,
     getAllPosts,
     getLikedPosts,
-    getFollowingPost
+    getFollowingPost,
+    getUserPost
 } = require('../controllers/post.controller')
 const router = express.Router()   
 
@@ -16,6 +17,7 @@ router.get('/all' , protectRoute , getAllPosts)
 router.get('/followingpost' , protectRoute , getFollowingPost)
 router.get('/liked/:id' , protectRoute , getLikedPosts)
 router.post('/create' , protectRoute , createPost)
+router.get('/user/:username' , protectRoute  , getUserPost)
 router.post('/like/:id' , protectRoute , likeUnlike)
 router.post('/comment/:id' , protectRoute , commentPost)
 router.delete('/:id' , protectRoute , deletePost)

@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser")
 const userRoute = require('./routes/route')
 const postRoute = require('./routes/post')  
 const cloudinary = require('cloudinary')
+const notificationRoute = require('./routes/notification')
 
 dotenv.config()
 cloudinary.config({
@@ -25,6 +26,7 @@ app.use(cookieParser())
 app.use('/api/auth' , authRoute)
 app.use('/api/users' , userRoute)
 app.use('/api/posts' , postRoute)
+app.use('/api/notification' , notificationRoute)
 
  
 
