@@ -2,8 +2,8 @@
 
 function App() {
   return (
-    <div>
-      Namma than ingaa
+    <div className="bg-blue-400">
+      Namma than inga
     </div>
   );
 }
