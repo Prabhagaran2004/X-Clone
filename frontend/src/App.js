@@ -2,10 +2,12 @@
 
 function App() {
   return (
-    <div className="bg-blue-400">
-      Namma than inga
+    <div>
+      <h1>Hello</h1>
+      <button className="btn btn-success">Success</button>
     </div>
-  );
+  ); 
 }
 
 export default App;
+  
