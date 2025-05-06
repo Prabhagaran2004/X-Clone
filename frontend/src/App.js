@@ -1,10 +1,17 @@
-
+import React from 'react'
+import { Routes , Route } from "react-router-dom"
+import SignUpPage from './pages/auth/signup/SignUpPage';
+import LoginPage from './pages/auth/login/LoginPage';
+import HomePage from './pages/home/HomePage';
 
 function App() {
   return (
-    <div className="bg-black">
-      <h1>Hello</h1>
-      <button className="btn btn-success">Success</button>
+    <div className="flex max-w-6xl mx-auto">
+      <Routes>
+        <Route path='/' element = {<HomePage />} />
+        <Route path='/login' element = {<LoginPage />} />
+        <Route path='/signup' element = {<SignUpPage />} />
+      </Routes>
     </div>
   ); 
 }
