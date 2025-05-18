@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-// import Posts from "../../components/common/Posts";
+import Post from "../../components/common/Post";
 import CreatePost from "./CreatePost";
 
 const HomePage = () => {
@@ -13,22 +13,22 @@ const HomePage = () => {
 				<div className='flex w-full border-b border-gray-700'>
 					<div
 						className={
-							"flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 cursor-pointer relative"
+							"flex justify-center flex-1 p-3 hover:bg-stone-900 transition duration-300 cursor-pointer relative"
 						}
 						onClick={() => setFeedType("forYou")}
 					>
 						For you
 						{feedType === "forYou" && (
-							<div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary'></div>
+							<div className='absolute bottom-0 w-10  h-1 rounded-full bg-blue-600'></div>
 						)}
 					</div>
 					<div
-						className='flex justify-center flex-1 p-3 hover:bg-secondary transition duration-300 cursor-pointer relative'
+						className='flex justify-center flex-1 p-3  hover:bg-stone-900  transition duration-300 cursor-pointer relative'
 						onClick={() => setFeedType("following")}
 					>
 						Following
 						{feedType === "following" && (
-							<div className='absolute bottom-0 w-10  h-1 rounded-full bg-primary'></div>
+							<div className='absolute bottom-0 w-10  h-1 rounded-full bg-blue-600'></div>
 						)}
 					</div>
 				</div>
@@ -37,7 +37,7 @@ const HomePage = () => {
 				<CreatePost />
 
 				{/* POSTS */}
-				{/* <Posts feedType={feedType} /> */}
+				<Post feedType={feedType} />
 			</div>
 		</>
 	);
